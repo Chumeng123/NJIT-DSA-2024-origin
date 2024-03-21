@@ -16,9 +16,10 @@ public interface QueueInterface<E> {
    
    /**
     * Add an element to the queue.
+    *
     * @param element The element to add, must not be null.
     * @throws QueueAllocationException If the reallocation for the queue failed in case queue needs reallocation.
-    * @throws NullPointerException If the element is null.
+    * @throws NullPointerException     If the element is null.
     */
    public void enqueue(E element) throws QueueAllocationException, NullPointerException;
 
