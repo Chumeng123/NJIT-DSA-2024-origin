@@ -31,13 +31,14 @@ public class Grades {
        5. Fix the issue.
        6. Transform the algorithm to <strong>use</strong> the generic one from Algorithms.java, as instructed in the readme file.
       */
-      int i = 0;
-      while (i < grades.length/2) {
-         int temp = grades[i];
-         grades[i] = grades[grades.length-i-1];
-         grades[grades.length-i-1] = temp;
-         i++;
-     }
+     // int i = 0;
+      //while (i < grades.length/2) {
+       //  int temp = grades[i];
+       //  grades[i] = grades[grades.length-i-1];
+       //  grades[grades.length-i-1] = temp;
+     //    i++;
+    // }
+      Algorithms.reverse(grades);
    }
 
    /**
@@ -52,23 +53,24 @@ public class Grades {
        5. Fix the issue.
        6. Transform the algorithm to <strong>use</strong> the generic one from Algorithms.java as instructed in the readme file.
       */
-      int min = 0;
-      int count = 0;
-      for (int i = 0; i < grades.length; i++) {
-         min = grades[i];
-         int minIndex = i;
-         for (int j = i+1; j < grades.length ; j++) {
-            if (grades[j] < min){
-               min = grades[j];
-               minIndex = j;
-            }
-         }
-         if (minIndex != i){   //当最小值数组下标变化了，就进行交换
-            grades[minIndex] = grades[i];
-            grades[i] = min;
-         }
+     // int min = 0;
+     // int count = 0;
+     // for (int i = 0; i < grades.length; i++) {
+       //  min = grades[i];
+       //  int minIndex = i;
+       //  for (int j = i+1; j < grades.length ; j++) {
+         //   if (grades[j] < min){
+           //    min = grades[j];
+         //      minIndex = j;
+        //    }
+      //   }
+     //    if (minIndex != i){   //当最小值数组下标变化了，就进行交换
+      //      grades[minIndex] = grades[i];
+           // grades[i] = min;
+      //   }
 //            System.out.println("第"+(++count)+"轮后:"+Arrays.toString(arr));
-      }
+     // }
+      Algorithms.sort(grades);
    }
 
    /**
