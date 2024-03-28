@@ -11,6 +11,8 @@ package oy.tol.tra;
  */
 public class StackFactory {
 
+
+
    private StackFactory() {
    }
 
@@ -38,7 +40,7 @@ public class StackFactory {
     */
    public static StackInterface<Character> createCharacterStack() {
 
-      return stack;
+      return new StackImplementation<>();
    }
 
    /**
@@ -48,6 +50,6 @@ public class StackFactory {
     */
     public static StackInterface<Character> createCharacterStack(int capacity) {
 
-      return stack;
+      return new StackImplementation<>(capacity);
    }
 }

@@ -17,13 +17,15 @@ public interface StackInterface<E> {
     * <p>
     * If the internal array does not have enough room for the element, the implementation MUST
     * first create a larger array, copy the elements from the old array to the new array,
-    * and then replace the old array with the new array. The capacity of the array must 
+    * and then replace the old array with the new array. The capacity of the array must
     * be updated too.
+    *
     * @param element The element to push, must not be null, if it is, throw NullPointerException.
+    * @return
     * @throws StackAllocationException if no additional room can be allocated for the stack
-    * @throws NullPointerException if the element pushed is null.
+    * @throws NullPointerException     if the element pushed is null.
     */
-   public void push(E element) throws StackAllocationException, NullPointerException;
+   public boolean push(E element) throws StackAllocationException, NullPointerException;
 
    /**
     * Pops an element out of the stack, removing it from the internal data storage.
