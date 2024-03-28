@@ -27,6 +27,8 @@ public class DailyTasks {
 
    private void run() {
       try {
+         dailyTaskQueue = new QueueImplementation<>(); // Create a new ArrayQueue for daily tasks
+         readTasks(); // Read tasks for today
          // TODO:
          // 1. create a queue (to the member variable!) for daily tasks, which are strings.
          
@@ -40,6 +42,13 @@ public class DailyTasks {
             // 4.1 in the timer task run:
             @Override
             public void run() {
+               if (!dailyTaskQueue.isEmpty()) { // Check if there are tasks in the queue
+               String task = dailyTaskQueue.dequeue(); // Dequeue the task
+               System.out.println("Task: " + task); // Print the task
+            } else {
+               timer.cancel(); // Cancel the timer if there are no tasks in the queue
+            }
+
                // 4.1.1 check if there are tasks in the queue:
                
                   // 4.1.2 if yes, print the task from the queue, dequeueing it.
@@ -58,8 +67,9 @@ public class DailyTasks {
       tasks = new String(getClass().getClassLoader().getResourceAsStream("DailyTasks.txt").readAllBytes());
       String[] allTasks = tasks.split("\\r?\\n");
       for (String task : allTasks) {
+         dailyTaskQueue.enqueue(task); // Enqueue each task to the Queue implementation
          // TODO: Enqueue the task to your Queue implementation:
-         
+         System.out.println("Number of tasks in the queue: " + dailyTaskQueue.size()); // Print the number of tasks in the queue
       }
       // TODO: print out to the console the number of tasks in the queue:
       
