@@ -4,26 +4,38 @@ public class Algorithms {
     private Algorithms() {
         // Empty
     }
+    public static <T extends Comparable<T>> void sort(T [] array) {
 
-    public static int binarySearch(int target, Integer[] array, int fromIndex, int toIndex) {
-        while (fromIndex <= toIndex) {
-            int mid = fromIndex + (toIndex - fromIndex) / 2;
-            if (array[mid] == target) {
-                return mid;
-            } else if (array[mid] < target) {
-                fromIndex = mid + 1;
-            } else {
-                toIndex = mid - 1;
+
+        for (int i = 0; i < array.length - 1; i++) {
+            for (int j = 0; j < array.length - i - 1; j++) {
+                if (array[j].compareTo(array[j + 1]) > 0) {
+                    T temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp;
+                }
             }
         }
-        return -1;
     }
 
+    // ...
+    public static <T> void reverse(T [] array) {
 
-    public static int binarySearch(String value, String[] array, int fromIndex, int toIndex) {
+        int start = 0;
+        int end = array.length - 1;
+        while (start < end) {
+            T temp = array[start];
+            array[start] = array[end];
+            array[end] = temp;
+            start++;
+            end--;
+        }
+
+    }
+    public static <T extends Comparable<T>> int binarySearch(T target, T[] array, int fromIndex, int toIndex) {
         while (fromIndex <= toIndex) {
             int mid = fromIndex + (toIndex - fromIndex) / 2;
-            int cmp = array[mid].compareTo(value);
+            int cmp = array[mid].compareTo(target);
             if (cmp == 0) {
                 return mid;
             } else if (cmp < 0) {
@@ -35,33 +47,11 @@ public class Algorithms {
         return -1;
     }
 
-
-    public static void sort(Integer[] array) {
-        int n = array.length;
-        boolean swapped;
-        for (int i = 0; i < n - 1; i++) {
-            swapped = false;
-            for (int j = 0; j < n - i - 1; j++) {
-                if (array[j] > array[j + 1]) {
-                    Integer temp = array[j];
-                    array[j] = array[j + 1];
-                    array[j + 1] = temp;
-                    swapped = true;
-                }
-            }
-            if (!swapped) {
-                break;
-            }
-        }
-    }
-
-
-    public static void sort(String[] array) {
+    public static <T extends Comparable<T>> void fastsort(T[] array) {
         quickSort(array, 0, array.length - 1);
     }
 
-
-    private static void quickSort(String[] array, int start, int end) {
+    private static <T extends Comparable<T>> void quickSort(T[] array, int start, int end) {
         if (start < end) {
             int pivotIndex = partition(array, start, end);
             quickSort(array, start, pivotIndex - 1);
@@ -69,19 +59,18 @@ public class Algorithms {
         }
     }
 
-
-    private static int partition(String[] array, int start, int end) {
-        String pivot = array[end];
+    private static <T extends Comparable<T>> int partition(T[] array, int start, int end) {
+        T pivot = array[end];
         int i = start - 1;
         for (int j = start; j < end; j++) {
             if (array[j].compareTo(pivot) < 0) {
                 i++;
-                String temp = array[i];
+                T temp = array[i];
                 array[i] = array[j];
                 array[j] = temp;
             }
         }
-        String temp = array[i + 1];
+        T temp = array[i + 1];
         array[i + 1] = array[end];
         array[end] = temp;
         return i + 1;
