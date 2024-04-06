@@ -3,17 +3,20 @@ package oy.tol.tra;
 import java.util.Arrays;
 
 public class QueueImplementation<E> implements QueueInterface<E> {
-
     private static final int DEFAULT_CAPACITY = 10;
     private E[] array;
     private int size;
     private int capacity;
+    private int head;
+    private int tail;
 
     @SuppressWarnings("unchecked")
     public QueueImplementation(int capacity) {
         this.capacity = capacity > 0 ? capacity : DEFAULT_CAPACITY;
         this.array = (E[]) new Object[this.capacity];
         this.size = 0;
+        this.head = 0;
+        this.tail = -1; // Initially, there's no element in the queue
     }
 
     public QueueImplementation() {
@@ -28,7 +31,9 @@ public class QueueImplementation<E> implements QueueInterface<E> {
         if (size == capacity) {
             reallocate();
         }
-        array[size++] = element;
+        tail = (tail + 1) % capacity; // Move tail circularly
+        array[tail] = element;
+        size++;
     }
 
     @Override
@@ -36,8 +41,10 @@ public class QueueImplementation<E> implements QueueInterface<E> {
         if (isEmpty()) {
             throw new QueueIsEmptyException("Queue is empty, cannot dequeue.");
         }
-        E element = array[0];
-        System.arraycopy(array, 1, array, 0, --size);
+        E element = array[head];
+        array[head] = null; // Clear the dequeued element
+        head = (head + 1) % capacity; // Move head circularly
+        size--;
         return element;
     }
 
@@ -46,7 +53,7 @@ public class QueueImplementation<E> implements QueueInterface<E> {
         if (isEmpty()) {
             throw new QueueIsEmptyException("Queue is empty, cannot retrieve element.");
         }
-        return array[0];
+        return array[head];
     }
 
     @Override
@@ -63,6 +70,8 @@ public class QueueImplementation<E> implements QueueInterface<E> {
     public void clear() {
         Arrays.fill(array, null);
         size = 0;
+        head = 0; // Reset head
+        tail = -1; // Reset tail
     }
 
     @Override
@@ -74,15 +83,19 @@ public class QueueImplementation<E> implements QueueInterface<E> {
     private void reallocate() {
         capacity *= 2;
         E[] newArray = (E[]) new Object[capacity];
-        System.arraycopy(array, 0, newArray, 0, size);
+        for (int i = 0; i < size; i++) {
+            newArray[i] = array[(head + i) % size]; // Copy elements starting from head
+        }
         array = newArray;
+        head = 0; // Reset head after reallocation
+        tail = size - 1; // Reset tail after reallocation
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("[");
         for (int i = 0; i < size; i++) {
-            sb.append(array[i]);
+            sb.append(array[(head + i) % capacity]);
             if (i < size - 1) {
                 sb.append(", ");
             }
@@ -91,5 +104,3 @@ public class QueueImplementation<E> implements QueueInterface<E> {
         return sb.toString();
     }
 }
-
-
